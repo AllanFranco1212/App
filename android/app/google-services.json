@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "365979554032",
+    "firebase_url": "https://autobet-e3631-default-rtdb.firebaseio.com",
+    "project_id": "autobet-e3631",
+    "storage_bucket": "autobet-e3631.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365979554032:android:db73c8b95ae1cd7c61f235",
+        "android_client_info": {
+          "package_name": "com.franco.autobet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd3Uyp_ziSBm_4FE-PTTYn2fC6qxpG9Sg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
