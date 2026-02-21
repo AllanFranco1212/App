@@ -41,7 +41,6 @@ dependencies:
   
   # Novas dependências (Verifique se estão aqui apenas uma vez)
   shared_preferences: ^2.2.2
-  flutter_local_notifications: ^17.2.2
 
   # Adicione aqui outras bibliotecas que você já tinha (ex: cupertino_icons)
   cupertino_icons: ^1.0.2
