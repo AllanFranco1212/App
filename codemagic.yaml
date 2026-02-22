@@ -18,8 +18,11 @@ workflows:
           cd ..
           
           XCCONFIG="ios/Flutter/Release.xcconfig"
-          LINE='#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"'
+          LINE='#include "../Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"'
           grep -qF "$LINE" "$XCCONFIG" || echo "$LINE" >> "$XCCONFIG"
+    
+    echo "=== Conteúdo do Release.xcconfig ==="
+    cat "$XCCONFIG
 
       - name: Build iOS
         script: |
