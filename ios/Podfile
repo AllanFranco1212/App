@@ -1,19 +1,18 @@
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-    end
+# Uncomment the next line to define a global platform for your project
+platform :ios, '13.0'
+
+target 'Runner' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  target 'RunnerTests' do
+    inherit! :search_paths
+    # Pods for testing
   end
-  
-  # Fix: inclui o xcconfig dos Pods no Release.xcconfig do Flutter
-  xcconfig_path = File.join(__dir__, 'Flutter', 'Release.xcconfig')
-  xcconfig_content = File.read(xcconfig_path)
-  pods_xcconfig = 'Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig'
-  unless xcconfig_content.include?(pods_xcconfig)
-    File.open(xcconfig_path, 'w') do |f|
-      f.puts "#include \"#{pods_xcconfig}\""
-      f.print xcconfig_content
-    end
-  end
+
+  # Pods for Runner
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
 end
