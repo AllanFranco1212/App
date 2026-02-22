@@ -9,7 +9,7 @@ workflows:
     scripts:
       - name: Dependências
         script: flutter pub get
-
+      
       - name: Corrigir Pods e Firebase
         script: |
           cd ios
@@ -20,9 +20,9 @@ workflows:
           XCCONFIG="ios/Flutter/Release.xcconfig"
           LINE='#include "../Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"'
           grep -qF "$LINE" "$XCCONFIG" || echo "$LINE" >> "$XCCONFIG"
-    
-    echo "=== Conteúdo do Release.xcconfig ==="
-    cat "$XCCONFIG
+          
+          echo "=== Conteúdo do Release.xcconfig ==="
+          cat "$XCCONFIG"
 
       - name: Build iOS
         script: |
