@@ -14,15 +14,24 @@ workflows:
         script: |
           cd ios
           rm -rf Pods Podfile.lock
+          
+          # Adiciona post_install hook no Podfile para fixar o xcconfig
+          cat >> Podfile << 'EOF'
+      
+      # Fix Firebase xcconfig
+      post_install do |installer|
+        installer.pods_project.targets.each do |target|
+          flutter_additional_ios_build_settings(target)
+        end
+        release_xcconfig = File.join(__dir__, 'Flutter', 'Release.xcconfig')
+        content = File.read(release_xcconfig)
+        fix_line = "#include \"Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig\"\n"
+        File.write(release_xcconfig, fix_line + content) unless content.include?('Pods-Runner.release.xcconfig')
+      end
+      EOF
+          
           pod install --repo-update
           cd ..
-          
-          XCCONFIG="ios/Flutter/Release.xcconfig"
-          LINE='#include "../Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"'
-          grep -qF "$LINE" "$XCCONFIG" || echo "$LINE" >> "$XCCONFIG"
-          
-          echo "=== Conteúdo do Release.xcconfig ==="
-          cat "$XCCONFIG"
 
       - name: Build iOS
         script: |
