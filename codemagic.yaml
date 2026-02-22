@@ -1,3 +1,36 @@
-git add codemagic.yaml
-git commit -m 'Add first workflow'
-git push
+workflows:
+  ios-altstore:
+    name: iOS para AltStore
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Dependências
+        script: flutter pub get
+
+      - name: Corrigir Pods e Firebase
+        script: |
+          cd ios
+          rm -rf Pods Podfile.lock
+          pod install --repo-update
+          cd ..
+          
+          XCCONFIG="ios/Flutter/Release.xcconfig"
+          LINE='#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"'
+          grep -qF "$LINE" "$XCCONFIG" || echo "$LINE" >> "$XCCONFIG"
+
+      - name: Build iOS
+        script: |
+          flutter build ios --release --no-codesign -t lib/main.dart
+
+      - name: Empacotar IPA
+        script: |
+          APP=$(find build/ios/iphoneos -name "Runner.app" -type d | head -1)
+          mkdir -p Payload
+          cp -r "$APP" Payload/
+          zip -qr bot_autobet.ipa Payload/
+
+    artifacts:
+      - bot_autobet.ipa
