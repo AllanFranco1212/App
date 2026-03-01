@@ -37,11 +37,23 @@ void main() async {
     debugPrint("Erro Firebase: $e");
   }
 
-  // Inicialização das Notificações Locais
+  // Inicialização das Notificações Locais (Android + iOS)
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
-  const InitializationSettings initializationSettings =
-      InitializationSettings(android: initializationSettingsAndroid);
+      
+  // NOVO: Configuração obrigatória para o motor do iPhone
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+  );
+
+  // ATUALIZADO: Agrupando as regras de Android e iOS
+  const InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS, 
+  );
   
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
