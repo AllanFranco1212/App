@@ -232,7 +232,18 @@ class _LogNotificationManagerState extends State<LogNotificationManager> {
       styleInformation: BigTextStyleInformation(''), // Permite texto longo
     );
     
-    const NotificationDetails details = NotificationDetails(android: androidDetails);
+    // NOVO: Detalhes visuais da notificação no iPhone
+    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    
+    // ATUALIZADO: Juntando Android e iOS
+    const NotificationDetails details = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails, // Inserido aqui!
+    );
     
     // ID único baseado no tempo para não sobrescrever
     final int notificationId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
